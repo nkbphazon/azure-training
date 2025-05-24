@@ -285,18 +285,10 @@ az group show \
 **🔍 Research Challenge:** Find the correct parameters to create a VNet with the specified address space.
 
 ```bash
-# Bash/Linux
 az network vnet ______ \
     --____ "vnet-training" \
     --resource-group "YOUR_UNIQUE_RG_NAME" \
     --________ "southcentralus" \
-    --address-_______ "___.___.___.___/___"
-
-# PowerShell
-az network vnet ______ `
-    --____ "vnet-training" `
-    --resource-group "YOUR_UNIQUE_RG_NAME" `
-    --________ "southcentralus" `
     --address-_______ "___.___.___.___/___"
 ```
 
@@ -304,18 +296,10 @@ az network vnet ______ `
 <summary>🔓 Click to reveal the complete command</summary>
 
 ```bash
-# Bash/Linux
 az network vnet create \
     --name "vnet-training" \
     --resource-group "YOUR_UNIQUE_RG_NAME" \
     --location "southcentralus" \
-    --address-prefix "192.168.10.0/24"
-
-# PowerShell
-az network vnet create `
-    --name "vnet-training" `
-    --resource-group "YOUR_UNIQUE_RG_NAME" `
-    --location "southcentralus" `
     --address-prefix "192.168.10.0/24"
 ```
 
@@ -991,14 +975,18 @@ cat /mnt/azurefiles/team-documents/vm-student-*.txt
 **🔍 Research Challenge:** Find the command to list blob containers.
 
 ```bash
-az storage container ____ --account-____ "strtraining[your-numbers]" --account-___ "[KEY-FROM-EARLIER]"
+az storage container ____ \
+    --account-____ "strtraining[your-numbers]" \
+    --account-___ "[KEY-FROM-EARLIER]"
 ```
 
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
 ```bash
-az storage container list --account-name "strtraining[your-numbers]" --account-key "[KEY-FROM-EARLIER]"
+az storage container list \
+    --account-name "strtraining[your-numbers]" \
+    --account-key "[KEY-FROM-EARLIER]"
 ```
 
 Use the storage account key you retrieved in the File Storage section.
@@ -1010,14 +998,20 @@ Use the storage account key you retrieved in the File Storage section.
 **🔍 Research Challenge:** Find the command to list blobs in a specific container.
 
 ```bash
-az storage blob ____ --container-____ "private-documents" --account-____ "strtraining[your-numbers]" --account-___ "[KEY-FROM-EARLIER]"
+az storage blob ____ \
+    --container-____ "private-documents" \
+    --account-____ "strtraining[your-numbers]" \
+    --account-___ "[KEY-FROM-EARLIER]"
 ```
 
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
 ```bash
-az storage blob list --container-name "private-documents" --account-name "strtraining[your-numbers]" --account-key "[KEY-FROM-EARLIER]"
+az storage blob list \
+    --container-name "private-documents" \
+    --account-name "strtraining[your-numbers]" \
+    --account-key "[KEY-FROM-EARLIER]"
 ```
 
 </details>
@@ -1032,14 +1026,24 @@ echo "File uploaded via CLI from $(hostname)" > cli-upload.txt
 **🔍 Research Challenge:** Find the command to upload a blob via CLI.
 
 ```bash
-az storage blob ______ --container-____ "private-documents" --____ "cli-upload.txt" --____ "cli-upload.txt" --account-____ "strtraining[your-numbers]" --account-___ "[KEY-FROM-EARLIER]"
+az storage blob ______ \
+    --container-____ "private-documents" \
+    --____ "cli-upload.txt" \
+    --____ "cli-upload.txt" \
+    --account-____ "strtraining[your-numbers]" \
+    --account-___ "[KEY-FROM-EARLIER]"
 ```
 
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
 ```bash
-az storage blob upload --container-name "private-documents" --name "cli-upload.txt" --file "cli-upload.txt" --account-name "strtraining[your-numbers]" --account-key "[KEY-FROM-EARLIER]"
+az storage blob upload \
+    --container-name "private-documents" \
+    --name "cli-upload.txt" \
+    --file "cli-upload.txt" \
+    --account-name "strtraining[your-numbers]" \
+    --account-key "[KEY-FROM-EARLIER]"
 ```
 
 </details>
@@ -1049,14 +1053,24 @@ az storage blob upload --container-name "private-documents" --name "cli-upload.t
 **🔍 Research Challenge:** Find the command to download a blob via CLI.
 
 ```bash
-az storage blob ________ --container-____ "private-documents" --____ "confidential.txt" --____ "downloaded-confidential.txt" --account-____ "strtraining[your-numbers]" --account-___ "[KEY-FROM-EARLIER]"
+az storage blob ________ \
+    --container-____ "private-documents" \
+    --____ "confidential.txt" \
+    --____ "downloaded-confidential.txt" \
+    --account-____ "strtraining[your-numbers]" \
+    --account-___ "[KEY-FROM-EARLIER]"
 ```
 
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
 ```bash
-az storage blob download --container-name "private-documents" --name "confidential.txt" --file "downloaded-confidential.txt" --account-name "strtraining[your-numbers]" --account-key "[KEY-FROM-EARLIER]"
+az storage blob download \
+    --container-name "private-documents" \
+    --name "confidential.txt" \
+    --file "downloaded-confidential.txt" \
+    --account-name "strtraining[your-numbers]" \
+    --account-key "[KEY-FROM-EARLIER]"
 ```
 
 Verify the download:
