@@ -27,6 +27,11 @@
    - [Task 2: Azure File Storage Configuration](#task-2-azure-file-storage-configuration)
    - [Task 3: Azure Blob Storage Configuration](#task-3-azure-blob-storage-configuration)
    - [Task 4: Configure Storage Security](#task-4-configure-storage-security)
+     - [Understanding Storage Account Keys](#understanding-storage-account-keys)
+     - [Subtask 4.1: Create Shared Access Signature (SAS)](#subtask-41-create-shared-access-signature-sas)
+     - [Subtask 4.2: Demonstrate Key Rotation and SAS Invalidation](#subtask-42-demonstrate-key-rotation-and-sas-invalidation)
+     - [Subtask 4.3: Best Practices for Key Management](#subtask-43-best-practices-for-key-management)
+     - [Subtask 4.4: Configure Network Access](#subtask-44-configure-network-access)
    - [Task 5: Storage Performance and Monitoring](#task-5-storage-performance-and-monitoring)
 6. [Lesson 5: Key Vault](#lesson-5-key-vault)
    - [Task 1: Create Key Vault (Portal)](#task-1-create-key-vault-portal)
@@ -1077,24 +1082,60 @@ cat downloaded-confidential.txt
 
 ### Task 4: Configure Storage Security
 
+#### Understanding Storage Account Keys
+
+**📚 Storage Account Keys Overview:**
+
+Azure Storage accounts use two 512-bit storage account keys for authentication. These keys provide full access to your storage account and all its data.
+
+**🔑 Key Characteristics:**
+- **Two keys provided:** key1 and key2 (for zero-downtime rotation)
+- **Full access:** Both keys provide complete access to all storage services
+- **Base64 encoded:** Keys are long, randomly generated strings
+- **Regeneratable:** Keys can be rotated/regenerated for security
+
+**🔄 Key Rotation Strategy:**
+1. Applications use key1 for daily operations
+2. When rotation needed, regenerate key2
+3. Update applications to use key2
+4. Regenerate key1 (invalidates old key1)
+5. Applications now use key2, ready for next rotation cycle
+
+**🎫 SAS Token Relationship:**
+- SAS tokens are cryptographically signed using account keys
+- If the key used to sign a SAS token is regenerated, the SAS token becomes invalid
+- This provides immediate revocation capability for compromised tokens
+
 #### Subtask 4.1: Create Shared Access Signature (SAS)
 
-**🟢 Student A:** Generate SAS tokens for secure access.
+**🟢 Student A:** Generate SAS tokens for secure access and learn about key rotation.
 
-**Step 1:** Create Container-Level SAS (Portal)
+**Step 1:** View Current Storage Account Keys
+```bash
+az storage account keys list \
+    --resource-group "YOUR_UNIQUE_RG_NAME" \
+    --account-name "strtraining[your-numbers]" \
+    --output table
+```
+
+You should see two keys: key1 and key2. Note that both have the same permissions.
+
+**Step 2:** Create Container-Level SAS (Portal)
 - Go to the "private-documents" container
 - Click "Shared access tokens" in the left menu
 - **Permissions:** Check Read and List
 - **Start time:** Current time
-- **Expiry time:** 1 hour from now
+- **Expiry time:** 2 hours from now
+- **Note:** Observe that the SAS is signed with one of your account keys
 - Click "Generate SAS token and URL"
 - Copy the "Blob SAS URL"
 
-**Step 2:** Test SAS Access
+**Step 3:** Test SAS Access
 - Open the SAS URL in a browser
 - It should allow access to list container contents despite being a private container
+- **Save this URL** - you'll use it to test key rotation effects
 
-**Step 3:** Create Blob-Level SAS via CLI
+**Step 4:** Create Blob-Level SAS via CLI
 
 **🔍 Research Challenge:** Find the command to generate a SAS token for a specific blob.
 
@@ -1103,7 +1144,7 @@ az storage blob generate-___ \
     --container-____ "private-documents" \
     --____ "confidential.txt" \
     --permissions r \
-    --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
+    --expiry $(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ') \
     --account-____ "strtraining[your-numbers]" \
     --account-___ "[KEY-FROM-EARLIER]"
 ```
@@ -1116,16 +1157,142 @@ az storage blob generate-sas \
     --container-name "private-documents" \
     --name "confidential.txt" \
     --permissions r \
-    --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
+    --expiry $(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ') \
     --account-name "strtraining[your-numbers]" \
     --account-key "[KEY-FROM-EARLIER]"
 ```
 
 This returns a SAS token that can be appended to the blob URL for temporary access.
 
+**Save this SAS token** - you'll test its validity after key rotation.
+
 </details>
 
-#### Subtask 4.2: Configure Network Access
+#### Subtask 4.2: Demonstrate Key Rotation and SAS Invalidation
+
+**🟠 Student B:** Learn about key rotation and its security implications.
+
+**Step 1:** Test Current SAS Token Validity
+Before rotating keys, verify that the SAS tokens created by Student A are working:
+- Use the SAS URL from Step 3 in a browser - it should work
+- Test the blob-level SAS token by constructing the full URL:
+```
+https://strtraining[your-numbers].blob.core.windows.net/private-documents/confidential.txt?[SAS-TOKEN-FROM-STUDENT-A]
+```
+
+**Step 2:** Check Which Key Was Used for SAS
+The SAS tokens were likely created using key1. Let's verify which key we used:
+```bash
+# Show both keys - note which one matches the key used for SAS generation
+az storage account keys list \
+    --resource-group "YOUR_UNIQUE_RG_NAME" \
+    --account-name "strtraining[your-numbers]" \
+    --query "[].{KeyName:keyName,Value:value}" \
+    --output table
+```
+
+**Step 3:** Rotate the Storage Account Key
+
+**⚠️ Warning:** This will invalidate any SAS tokens signed with the regenerated key!
+
+**🔍 Research Challenge:** Find the command to regenerate a storage account key.
+
+```bash
+az storage account keys _______ \
+    --resource-_____ "YOUR_UNIQUE_RG_NAME" \
+    --account-____ "strtraining[your-numbers]" \
+    --key key1
+```
+
+<details>
+<summary>🔓 Click to reveal the complete command</summary>
+
+```bash
+az storage account keys renew \
+    --resource-group "YOUR_UNIQUE_RG_NAME" \
+    --account-name "strtraining[your-numbers]" \
+    --key key1
+```
+
+**Alternative using Portal:**
+1. Go to your Storage Account
+2. Click "Access keys" under "Security + networking"
+3. Click "Rotate key" next to key1
+4. Confirm the rotation
+
+</details>
+
+**Step 4:** Verify Key Rotation
+```bash
+# Check that key1 has a new value
+az storage account keys list \
+    --resource-group "YOUR_UNIQUE_RG_NAME" \
+    --account-name "strtraining[your-numbers]" \
+    --query "[].{KeyName:keyName,Value:value}" \
+    --output table
+```
+
+The key1 value should now be different from before.
+
+**Step 5:** Test SAS Token Invalidation
+Now test the SAS tokens created by Student A:
+
+- Try the container-level SAS URL in a browser - it should now return an "Authentication failed" error
+- Try the blob-level SAS URL - it should also fail
+
+**📚 What Happened:**
+- The SAS tokens were cryptographically signed with the old key1
+- When key1 was regenerated, those signatures became invalid
+- Azure can no longer verify the authenticity of the SAS tokens
+- This demonstrates immediate revocation capability for security incidents
+
+**Step 6:** Create New SAS Token with New Key
+```bash
+# Create a new SAS token using the rotated key
+az storage blob generate-sas \
+    --container-name "private-documents" \
+    --name "confidential.txt" \
+    --permissions r \
+    --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
+    --account-name "strtraining[your-numbers]" \
+    --account-key "[NEW-KEY1-VALUE]"
+```
+
+This new SAS token should work because it's signed with the current key1.
+
+#### Subtask 4.3: Best Practices for Key Management
+
+**👥 Both Students:** Understand key management best practices.
+
+**📋 Key Rotation Best Practices:**
+
+1. **Regular Rotation Schedule:**
+   - Rotate keys every 90 days minimum
+   - More frequently for high-security environments
+   - Immediately after suspected compromise
+
+2. **Zero-Downtime Rotation Process:**
+   - Use key2 while rotating key1
+   - Update applications to use key2
+   - Then rotate key1
+   - Alternating pattern ensures continuity
+
+3. **Monitoring and Alerting:**
+   - Monitor SAS token usage patterns
+   - Alert on authentication failures (may indicate compromised tokens)
+   - Track key rotation dates
+
+4. **Emergency Procedures:**
+   - Document steps for immediate key rotation
+   - Have emergency contacts for after-hours incidents
+   - Test rotation procedures regularly
+
+**🔐 Alternative Authentication Methods:**
+- **Azure AD authentication:** More secure than account keys
+- **Managed identities:** Best for Azure resources
+- **User delegation SAS:** Signed with Azure AD credentials, not account keys
+
+#### Subtask 4.4: Configure Network Access
 
 **🟠 Student B:** Implement network restrictions.
 
@@ -1866,5 +2033,8 @@ To continue your Azure learning journey:
 - Disable public access for storage when not required
 - Use shared access signatures for temporary, controlled access
 - Implement lifecycle management for cost optimization
+- Rotate storage account keys regularly for security
+- Understand the relationship between keys and SAS token validity
+- Use dual-key rotation strategy for zero-downtime key management
 
 **Keep practicing and building!** The hands-on experience you've gained is invaluable for real-world Azure implementations.
