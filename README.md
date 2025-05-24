@@ -6,7 +6,7 @@
 
 1. [Training Overview](#training-overview)
 2. [Lesson 1: Azure CLI Fundamentals](#lesson-1-azure-cli-fundamentals)
-   - [Task 1: Installation on Windows](#task-1-installation-on-windows)
+   - [Task 1: Azure CLI Installation](#task-1-azure-cli-installation)
    - [Task 2: Authentication](#task-2-authentication)
    - [Task 3: List Subscriptions](#task-3-list-subscriptions)
    - [Task 4: Set Active Subscription](#task-4-set-active-subscription)
@@ -86,34 +86,26 @@ Azure CLI (Command Line Interface) is a cross-platform command-line tool that pr
 - Infrastructure as Code (IaC) support
 - Perfect for DevOps workflows
 
-### Task 1: Installation on Windows
+### Task 1: Azure CLI Installation
 
-#### Method 1: MSI Installer (Recommended)
+**📖 Installation Documentation:** Please refer to the official Microsoft documentation for Azure CLI installation instructions:
 
-**Step 1:** Download the installer
-- Visit: `https://aka.ms/installazurecliwindows`
-- Download the MSI installer file
+- **Windows Installation:** [Install Azure CLI on Windows](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows)
+- **macOS Installation:** [Install Azure CLI on macOS](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-macos)
+- **Linux Installation:** [Install Azure CLI on Linux](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux)
 
-**Step 2:** Run the installer
-- Double-click the downloaded MSI file
-- Follow the installation wizard with default settings
+**🔍 Quick Installation Options:**
+- **Windows:** Use the MSI installer from the official documentation
+- **macOS:** Use Homebrew: `brew install azure-cli`
+- **Linux:** Use package managers or install script as documented
 
-**Step 3:** Verify installation
-Open Command Prompt or PowerShell and run:
+**✅ Verify Installation:**
+After installation, verify Azure CLI is working by running:
 ```bash
 az --version
 ```
 
-#### Method 2: PowerShell (Alternative)
-
-Run PowerShell as Administrator and execute:
-```powershell
-# Download and install Azure CLI
-Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi
-Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
-```
-
-> **Note:** You may need to restart your command prompt or PowerShell session after installation.
+> **Note:** You may need to restart your command prompt or terminal session after installation.
 
 ### Task 2: Authentication
 
