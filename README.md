@@ -248,34 +248,18 @@ az account list-locations --output table
 
 **🔍 Research Challenge:** Find the correct parameters to create a resource group in South Central US.
 
-**Bash/Linux:**
 ```bash
 az group ______ \
     --____ "YOUR_UNIQUE_RG_NAME" \
     --________ "___________"
 ```
 
-**PowerShell:**
-```powershell
-az group ______ `
-    --____ "YOUR_UNIQUE_RG_NAME" `
-    --________ "___________"
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az group create \
     --name "YOUR_UNIQUE_RG_NAME" \
-    --location "southcentralus"
-```
-
-**PowerShell:**
-```powershell
-az group create `
-    --name "YOUR_UNIQUE_RG_NAME" `
     --location "southcentralus"
 ```
 
@@ -839,34 +823,18 @@ Complete previous lessons. You'll use the same resource group and virtual machin
 
 **🔍 Research Challenge:** Find the Azure CLI command to show storage account connection strings.
 
-**Bash/Linux:**
 ```bash
 az storage account ____-____________-______ \
     --____ "strtraining[your-numbers]" \
     --resource-_____ "YOUR_UNIQUE_RG_NAME"
 ```
 
-**PowerShell:**
-```powershell
-az storage account ____-____________-______ `
-    --____ "strtraining[your-numbers]" `
-    --resource-_____ "YOUR_UNIQUE_RG_NAME"
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az storage account show-connection-string \
     --name "strtraining[your-numbers]" \
-    --resource-group "YOUR_UNIQUE_RG_NAME"
-```
-
-**PowerShell:**
-```powershell
-az storage account show-connection-string `
-    --name "strtraining[your-numbers]" `
     --resource-group "YOUR_UNIQUE_RG_NAME"
 ```
 
@@ -895,34 +863,18 @@ sudo mkdir -p /mnt/azurefiles
 
 **🔍 Research Challenge:** Find the command to list storage account keys.
 
-**Bash/Linux:**
 ```bash
 az storage account keys ____ \
     --______-____ "YOUR_UNIQUE_RG_NAME" \
     --account-____ "strtraining[your-numbers]"
 ```
 
-**PowerShell:**
-```powershell
-az storage account keys ____ `
-    --______-____ "YOUR_UNIQUE_RG_NAME" `
-    --account-____ "strtraining[your-numbers]"
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az storage account keys list \
     --resource-group "YOUR_UNIQUE_RG_NAME" \
-    --account-name "strtraining[your-numbers]"
-```
-
-**PowerShell:**
-```powershell
-az storage account keys list `
-    --resource-group "YOUR_UNIQUE_RG_NAME" `
     --account-name "strtraining[your-numbers]"
 ```
 
@@ -1173,7 +1125,6 @@ You should see two keys: key1 and key2. Note that both have the same permissions
 
 **🔍 Research Challenge:** Find the command to generate a SAS token for a specific blob.
 
-**Bash/Linux:**
 ```bash
 az storage blob generate-___ \
     --container-____ "private-documents" \
@@ -1184,21 +1135,9 @@ az storage blob generate-___ \
     --account-___ "[KEY-FROM-EARLIER]"
 ```
 
-**PowerShell:**
-```powershell
-az storage blob generate-___ `
-    --container-____ "private-documents" `
-    --____ "confidential.txt" `
-    --permissions r `
-    --expiry $(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ') `
-    --account-____ "strtraining[your-numbers]" `
-    --account-___ "[KEY-FROM-EARLIER]"
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az storage blob generate-sas \
     --container-name "private-documents" \
@@ -1206,17 +1145,6 @@ az storage blob generate-sas \
     --permissions r \
     --expiry $(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ') \
     --account-name "strtraining[your-numbers]" \
-    --account-key "[KEY-FROM-EARLIER]"
-```
-
-**PowerShell:**
-```powershell
-az storage blob generate-sas `
-    --container-name "private-documents" `
-    --name "confidential.txt" `
-    --permissions r `
-    --expiry $(date -u -d "2 hours" '+%Y-%m-%dT%H:%MZ') `
-    --account-name "strtraining[your-numbers]" `
     --account-key "[KEY-FROM-EARLIER]"
 ```
 
@@ -1255,7 +1183,6 @@ az storage account keys list \
 
 **🔍 Research Challenge:** Find the command to regenerate a storage account key.
 
-**Bash/Linux:**
 ```bash
 az storage account keys _______ \
     --resource-_____ "YOUR_UNIQUE_RG_NAME" \
@@ -1263,30 +1190,13 @@ az storage account keys _______ \
     --key key1
 ```
 
-**PowerShell:**
-```powershell
-az storage account keys _______ `
-    --resource-_____ "YOUR_UNIQUE_RG_NAME" `
-    --account-____ "strtraining[your-numbers]" `
-    --key key1
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az storage account keys renew \
     --resource-group "YOUR_UNIQUE_RG_NAME" \
     --account-name "strtraining[your-numbers]" \
-    --key key1
-```
-
-**PowerShell:**
-```powershell
-az storage account keys renew `
-    --resource-group "YOUR_UNIQUE_RG_NAME" `
-    --account-name "strtraining[your-numbers]" `
     --key key1
 ```
 
@@ -1623,7 +1533,6 @@ please see https://go.microsoft.com/fwlink/?linkid=2125287"
 
 **🔍 Research Challenge:** Find the correct parameters to retrieve a secret value.
 
-**Bash/Linux:**
 ```bash
 az keyvault secret ____ \
     --vault-____ "YOUR_KEYVAULT_NAME" \
@@ -1632,19 +1541,9 @@ az keyvault secret ____ \
     --______ tsv
 ```
 
-**PowerShell:**
-```powershell
-az keyvault secret ____ `
-    --vault-____ "YOUR_KEYVAULT_NAME" `
-    --____ "database-password" `
-    --_____ "value" `
-    --______ tsv
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az keyvault secret show \
     --vault-name "YOUR_KEYVAULT_NAME" \
@@ -1653,30 +1552,12 @@ az keyvault secret show \
     --output tsv
 ```
 
-**PowerShell:**
-```powershell
-az keyvault secret show `
-    --vault-name "YOUR_KEYVAULT_NAME" `
-    --name "database-password" `
-    --query "value" `
-    --output tsv
-```
-
 Replace `YOUR_KEYVAULT_NAME` with your actual Key Vault name.
 
 **Alternative: Get Full Secret Details**
-
-**Bash/Linux:**
 ```bash
 az keyvault secret show \
     --vault-name "YOUR_KEYVAULT_NAME" \
-    --name "database-password"
-```
-
-**PowerShell:**
-```powershell
-az keyvault secret show `
-    --vault-name "YOUR_KEYVAULT_NAME" `
     --name "database-password"
 ```
 
@@ -1714,34 +1595,18 @@ This shows all metadata including creation date, version, etc.
 
 **🔍 Research Challenge:** Find the correct command to list all secrets in a vault.
 
-**Bash/Linux:**
 ```bash
 az keyvault secret ____ \
     --vault-____ "YOUR_KEYVAULT_NAME" \
     --______ table
 ```
 
-**PowerShell:**
-```powershell
-az keyvault secret ____ `
-    --vault-____ "YOUR_KEYVAULT_NAME" `
-    --______ table
-```
-
 <details>
 <summary>🔓 Click to reveal the complete command</summary>
 
-**Bash/Linux:**
 ```bash
 az keyvault secret list \
     --vault-name "YOUR_KEYVAULT_NAME" \
-    --output table
-```
-
-**PowerShell:**
-```powershell
-az keyvault secret list `
-    --vault-name "YOUR_KEYVAULT_NAME" `
     --output table
 ```
 
