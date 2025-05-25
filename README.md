@@ -12,7 +12,7 @@ This comprehensive training program consists of six progressive lessons designed
 - Basic familiarity with command-line interfaces
 
 ### Training Structure
-- **Duration:** 6 lessons (approximately 8-12 hours total)
+- **Duration:** 8 lessons (approximately 12-16 hours total)
 - **Format:** Hands-on exercises with Azure CLI and Portal
 - **Approach:** Progressive learning with real-world scenarios
 - **Region:** All resources created in South Central US
@@ -146,6 +146,56 @@ Deploy and manage web applications with Azure App Services.
 
 ---
 
+### [Lesson 7: Azure SQL Database](lesson-7-azure-sql-database.md)
+**Duration:** 2-3 hours | **Format:** Partner work
+
+Implement fully managed relational database services.
+
+**Learning Objectives:**
+- Create and configure Azure SQL servers and databases
+- Configure firewall rules and network access
+- Connect from VMs and App Services using secure methods
+- Implement Azure AD authentication
+- Store connection strings in Key Vault
+- Monitor database performance and configure alerts
+- Implement geo-replication for disaster recovery
+
+**Key Skills:**
+- SQL Server and database creation
+- Network security configuration
+- Connection string management
+- Azure AD integration
+- Performance monitoring and tuning
+- Geo-replication setup
+- Row-level security implementation
+
+---
+
+### [Lesson 8: Azure Functions](lesson-8-azure-functions.md)
+**Duration:** 2-3 hours | **Format:** Partner work
+
+Build serverless event-driven applications.
+
+**Learning Objectives:**
+- Understand serverless computing concepts
+- Create Function Apps with consumption plans
+- Develop HTTP, Timer, and Blob-triggered functions
+- Configure function bindings for inputs and outputs
+- Integrate with Key Vault using managed identities
+- Implement Durable Functions for workflows
+- Monitor function performance and troubleshoot issues
+
+**Key Skills:**
+- Function App creation and configuration
+- Multiple trigger type implementation
+- Binding configuration
+- Managed identity integration
+- Durable Functions orchestration
+- Application Insights monitoring
+- CLI deployment techniques
+
+---
+
 ## Additional Resources
 
 ### [Quick Reference Guide](quick-reference-guide.md)
@@ -194,6 +244,18 @@ Essential Azure CLI commands, best practices, and troubleshooting tips for quick
 - Deployment strategies
 - Monitoring and scaling
 
+**Databases:**
+- Azure SQL Database
+- Connection security
+- Geo-replication
+- Performance optimization
+
+**Serverless:**
+- Azure Functions
+- Event-driven architecture
+- Consumption-based billing
+- Durable workflows
+
 ### Best Practices Learned
 
 Throughout this training, you'll learn and implement Azure best practices:
@@ -203,6 +265,8 @@ Throughout this training, you'll learn and implement Azure best practices:
 - **Automation:** Azure CLI usage, Infrastructure as Code concepts
 - **Monitoring:** Application Insights, metrics and alerting
 - **Cost Management:** Appropriate SKU selection, auto-scaling, lifecycle policies
+- **Database Security:** Azure AD authentication, firewall rules, encryption
+- **Serverless Architecture:** Event-driven design, consumption billing, automatic scaling
 
 ---
 
